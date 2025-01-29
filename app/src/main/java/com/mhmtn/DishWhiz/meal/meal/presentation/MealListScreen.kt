@@ -47,10 +47,10 @@ import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
 
 @Composable
 fun MealListScreen(
+    modifier: Modifier = Modifier,
     state: MealsState? =null,
     state2 : CountryMealsState? = null,
     state3 : IngredientMealsState? = null,
-    modifier: Modifier = Modifier,
     onNavigate: (String) -> Unit
 ) {
 

@@ -27,7 +27,7 @@ fun ExpandableText(
         )
 
         Text(
-            text = if (isExpanded) "Show More" else "Show Less",
+            text = if (isExpanded) "Show Less" else "Show More",
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable { isExpanded = !isExpanded },
             style = MaterialTheme.typography.bodySmall

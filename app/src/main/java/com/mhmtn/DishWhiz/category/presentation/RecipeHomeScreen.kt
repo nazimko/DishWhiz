@@ -121,7 +121,7 @@ fun CategoryCard(category: Category, onRecipeClick: (String) -> Unit) {
                     category.strCategory,
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
-                   // fontFamily = FontFamily(Font(R.font.baloo_da))
+                    fontFamily = FontFamily(Font(R.font.baloo_da))
                 )
                 Text(
                     category.strCategoryDescription,

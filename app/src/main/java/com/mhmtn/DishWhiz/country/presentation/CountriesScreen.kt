@@ -77,12 +77,13 @@ fun CountryRow(country: CountryWithFlag, onCountryClick: (String) -> Unit) {
                     )
                 )
             },
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(
             text = country.name,
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            modifier = Modifier.width(150.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Image(

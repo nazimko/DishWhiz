@@ -24,12 +24,17 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -46,6 +51,20 @@ fun DetailScreen(
     onWatchYoutube: (String) -> Unit
 ) {
 
+    val imageMinHeight = 72.dp
+    val imageMaxHeight = 250.dp
+    var imageHeight by remember { mutableStateOf(250.dp) }
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                imageHeight = (imageHeight + delta.dp).coerceIn(imageMinHeight, imageMaxHeight)
+                return Offset.Zero
+            }
+        }
+    }
+
     if (state.isLoading) {
         Box(
             modifier = modifier.fillMaxSize(),
@@ -58,29 +77,39 @@ fun DetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
+                .nestedScroll(nestedScrollConnection)
         ) {
             state.mealDetail?.let {
-                SubcomposeAsyncImage(
-                    model = state.mealDetail.strMealThumb,
-                    contentDescription = state.mealDetail.strMeal,
-                    contentScale = ContentScale.Crop,
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(250.dp)
+                        .height(imageHeight)
                         .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
-                        .shadow(4.dp),
-                    alignment = Alignment.Center,
-                    loading = {
-                        Box(contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator()
-                        }
-                    },
-                    error = {
-                        Icon(
-                            imageVector = Icons.Default.Info, contentDescription = null,
-                            tint = Color.Red
-                        )
-                    })
+                        .shadow(4.dp)
+                ) {
+                    SubcomposeAsyncImage(
+                        model = state.mealDetail.strMealThumb,
+                        contentDescription = state.mealDetail.strMeal,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(250.dp)
+                            .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                            .shadow(4.dp),
+                        alignment = Alignment.Center,
+                        loading = {
+                            Box(contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator()
+                            }
+                        },
+                        error = {
+                            Icon(
+                                imageVector = Icons.Default.Info, contentDescription = null,
+                                tint = Color.Red
+                            )
+                        })
+                }
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Yemek Bilgileri
@@ -100,10 +129,8 @@ fun DetailScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Sekmeler
                 val tabTitles = listOf("Ingredients", "Instructions")
                 val selectedTabIndex = remember { mutableIntStateOf(0) }
-
 
                 Column (
                     modifier = Modifier
@@ -124,7 +151,7 @@ fun DetailScreen(
 
                     when (selectedTabIndex.intValue) {
                         0 -> {
-                            // Malzemeler Listesi
+
                             LazyColumn(
                                 modifier = Modifier
                                     .weight(1f)
@@ -142,7 +169,7 @@ fun DetailScreen(
                         }
 
                         1 -> {
-                            // Talimatlar
+
                             Text(
                                 text = state.mealDetail.strInstructions,
                                 style = MaterialTheme.typography.bodyLarge,
@@ -155,7 +182,6 @@ fun DetailScreen(
                         }
                     }
 
-                    // YouTube Butonu
                     Button(
                         onClick = {onWatchYoutube(state.mealDetail.strYoutube)},
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
