@@ -12,3 +12,6 @@ val Pink40 = Color(0xFF7D5260)
 
 val Koyu = Color(0xFFB8BBA8)
 val Acik = Color(0xFFEAF2EB)
+
+val AcikKartRengi = Color(0xFF989D84)
+val KoyuKartRengi = Color(0xFFDFE7D6)

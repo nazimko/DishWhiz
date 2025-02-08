@@ -15,8 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
@@ -30,9 +33,12 @@ fun CustomCard(
     Card (
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(bottom = 8.dp,start = 8.dp,end = 8.dp),
         shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+        )
     ) {
         Column(
             modifier = Modifier.padding(8.dp),
@@ -55,7 +61,8 @@ fun CustomCard(
                 text = title,
                 style = MaterialTheme.typography.headlineMedium,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -66,4 +73,14 @@ fun CustomCard(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun CustomCardPreview() {
+    CustomCard(
+        title = "Card Title",
+        model = "https://www.themealdb.com/images/ingredients/Lime.png",
+        description = "",
+        modifier = Modifier)
 }

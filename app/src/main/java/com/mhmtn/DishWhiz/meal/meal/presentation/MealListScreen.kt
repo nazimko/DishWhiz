@@ -65,12 +65,13 @@ fun MealListScreen(
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = modifier.background(color = Acik)
+            modifier = modifier.background(color = MaterialTheme.colorScheme.primary)
         ){
             Text(
                 text = "Meals",
                 style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             LazyVerticalGrid(
@@ -145,7 +146,8 @@ fun MealListItem(meal: Meal, onClick: (String) -> Unit, cardColor : Color) {
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.fillMaxWidth().basicMarquee(),
                 textAlign = TextAlign.Center,
-                maxLines = 1
+                maxLines = 1,
+                color = Color.Black
             )
         }
     }

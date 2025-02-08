@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Kitchen
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -15,8 +16,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mhmtn.DishWhiz.core.domain.navigation.Destination
-import com.mhmtn.DishWhiz.ui.theme.Koyu
-
 
 @Composable
 fun BottomBar(navController: NavController) {
@@ -26,7 +25,7 @@ fun BottomBar(navController: NavController) {
         BottomNavItem("Ingredients", Destination.IngredientScreen.route, Icons.Default.Kitchen)
     )
     NavigationBar(
-        containerColor = Koyu
+        containerColor = MaterialTheme.colorScheme.secondary
     ) {
         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
         items.forEach { item ->
@@ -37,9 +36,9 @@ fun BottomBar(navController: NavController) {
                 label = { Text(item.label) },
                 colors = NavigationBarItemDefaults.colors
                     (
+                    selectedTextColor = Color.Black,
                     selectedIconColor = Color.Black,
                     unselectedIconColor = Color.Gray,
-                    selectedTextColor = Color.Black,
                     unselectedTextColor = Color.Gray,
                     indicatorColor = Color.White
                 )

@@ -16,10 +16,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,13 +48,13 @@ fun CountriesScreen(
     } else {
         Box (
             modifier = modifier
-                .background(color = Acik)
+                .background(color = MaterialTheme.colorScheme.primary)
         ){
             LazyColumn(
                 modifier = modifier
                     .padding(16.dp)
                     .fillMaxSize()
-                    .background(color = Acik)
+                    .background(color = MaterialTheme.colorScheme.primary)
             ) {
                 items(state.countries) {
                     CountryRow(
@@ -83,7 +85,8 @@ fun CountryRow(country: CountryWithFlag, onCountryClick: (String) -> Unit) {
         Text(
             text = country.name,
             fontSize = 20.sp,
-            modifier = Modifier.width(150.dp)
+            modifier = Modifier.width(150.dp),
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.width(16.dp))
         Image(

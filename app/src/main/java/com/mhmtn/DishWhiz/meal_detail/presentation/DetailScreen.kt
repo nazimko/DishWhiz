@@ -36,6 +36,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,8 +53,8 @@ fun DetailScreen(
 ) {
 
     val imageMinHeight = 72.dp
-    val imageMaxHeight = 250.dp
-    var imageHeight by remember { mutableStateOf(250.dp) }
+    val imageMaxHeight = LocalConfiguration.current.screenHeightDp.dp * 0.35f
+    var imageHeight by remember { mutableStateOf(imageMaxHeight) }
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -76,7 +77,7 @@ fun DetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.onSecondary)
                 .nestedScroll(nestedScrollConnection)
         ) {
             state.mealDetail?.let {
@@ -93,7 +94,7 @@ fun DetailScreen(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(250.dp)
+                            .height(LocalConfiguration.current.screenHeightDp.dp * 0.35f)
                             .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                             .shadow(4.dp),
                         alignment = Alignment.Center,
@@ -113,17 +114,21 @@ fun DetailScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Yemek Bilgileri
-                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                ) {
                     Text(
                         text = state.mealDetail.strMeal,
                         style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
                         text = "${state.mealDetail.strCategory} - ${state.mealDetail.strArea}",
                         style = MaterialTheme.typography.displaySmall,
                         fontStyle = FontStyle.Italic,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.tertiaryContainer
                     )
                 }
 
@@ -138,20 +143,20 @@ fun DetailScreen(
                 ) {
                     TabRow(
                         selectedTabIndex = selectedTabIndex.intValue,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        containerColor = MaterialTheme.colorScheme.onSecondary
                     ) {
                         tabTitles.forEachIndexed { index, title ->
                             Tab(
                                 selected = selectedTabIndex.intValue == index,
                                 onClick = { selectedTabIndex.intValue = index },
-                                text = { Text(text = title) }
+                                text = { Text(text = title, color = MaterialTheme.colorScheme.tertiaryContainer) }
                             )
                         }
                     }
 
                     when (selectedTabIndex.intValue) {
                         0 -> {
-
                             LazyColumn(
                                 modifier = Modifier
                                     .weight(1f)
@@ -162,7 +167,8 @@ fun DetailScreen(
                                 items(ingredientsList.size) { ingredient ->
                                     Text(
                                         text = "${ingredientsList[ingredient].second} ${ingredientsList[ingredient].first}",
-                                        style = MaterialTheme.typography.bodyMedium
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
                             }
@@ -177,7 +183,8 @@ fun DetailScreen(
                                     .weight(1f)
                                     .fillMaxWidth()
                                     .padding(16.dp)
-                                    .verticalScroll(rememberScrollState())
+                                    .verticalScroll(rememberScrollState()),
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -17,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mhmtn.DishWhiz.ui.theme.Acik
 import com.mhmtn.DishWhiz.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,14 +34,15 @@ fun TopBar() {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = "Logo",
-                        modifier = Modifier.size(64.dp)
+                        modifier = Modifier.size(64.dp),
+                        tint = Color.Black
                     )
                     HorizontalDivider(thickness = 3.dp, color = Color.Black)
                 }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Acik
+            containerColor = MaterialTheme.colorScheme.primary
         )
     )
 }

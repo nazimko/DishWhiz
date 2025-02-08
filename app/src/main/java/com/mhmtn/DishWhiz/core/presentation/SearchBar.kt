@@ -39,7 +39,7 @@ fun SearchBar(
             singleLine = true,
             textStyle = TextStyle(color = MaterialTheme.colorScheme.tertiary),
             shape = RoundedCornerShape(12.dp),
-            placeholder = { Text(text = "Search") },
+            placeholder = { Text(text = "Search", color = Color.Gray) },
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp, vertical = 6.dp)

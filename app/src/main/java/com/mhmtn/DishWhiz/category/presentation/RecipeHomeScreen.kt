@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import com.mhmtn.DishWhiz.R
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,6 +41,7 @@ import com.mhmtn.DishWhiz.category.domain.Category
 import com.mhmtn.DishWhiz.core.domain.navigation.Destination
 import com.mhmtn.DishWhiz.ui.theme.Acik
 import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
+import com.mhmtn.DishWhiz.R
 
 @Composable
 fun RecipeHomeScreen(
@@ -62,7 +62,7 @@ fun RecipeHomeScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .background(color = Acik)
+                .background(color = MaterialTheme.colorScheme.primary)
         ) {
             LazyColumn(
                 modifier = modifier.padding(4.dp)
@@ -90,7 +90,7 @@ fun CategoryCard(category: Category, onRecipeClick: (String) -> Unit) {
                 )
             },
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Acik)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -121,12 +121,14 @@ fun CategoryCard(category: Category, onRecipeClick: (String) -> Unit) {
                     category.strCategory,
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily(Font(R.font.baloo_da))
+                    fontFamily = FontFamily(Font(R.font.baloo_da)),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     category.strCategoryDescription,
                     style = MaterialTheme.typography.bodySmall,
-                    maxLines = 3
+                    maxLines = 3,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 HorizontalDivider(thickness = 2.dp)
