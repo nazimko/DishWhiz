@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.ads.MobileAds
 import com.mhmtn.DishWhiz.category.presentation.CategoryViewModel
 import com.mhmtn.DishWhiz.category.presentation.RecipeHomeScreen
 import com.mhmtn.DishWhiz.core.domain.navigation.Destination
@@ -35,6 +36,9 @@ import com.mhmtn.DishWhiz.meal_detail.presentation.DetailScreen
 import com.mhmtn.DishWhiz.meal_detail.presentation.MealDetailViewModel
 import com.mhmtn.DishWhiz.ui.theme.Acik
 import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -119,6 +123,10 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+            }
+            val backgroundScope = CoroutineScope(Dispatchers.IO)
+            backgroundScope.launch {
+                MobileAds.initialize(this@MainActivity) {}
             }
         }
     }

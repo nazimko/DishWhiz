@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
+import com.mhmtn.DishWhiz.core.presentation.BannerAdView
 import com.mhmtn.DishWhiz.meal_detail.domain.MealDetail
 import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
 
@@ -203,6 +204,7 @@ fun DetailScreen(
                             color = Color.White
                         )
                     }
+                    BannerAdView("ca-app-pub-3239252626734491/1877920389")
                 }
             }
         }
