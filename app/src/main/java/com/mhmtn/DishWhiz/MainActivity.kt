@@ -23,6 +23,7 @@ import com.mhmtn.DishWhiz.category.presentation.CategoryViewModel
 import com.mhmtn.DishWhiz.category.presentation.RecipeHomeScreen
 import com.mhmtn.DishWhiz.core.domain.navigation.Destination
 import com.mhmtn.DishWhiz.core.presentation.BottomBar
+import com.mhmtn.DishWhiz.core.presentation.InterstitialAdScreen
 import com.mhmtn.DishWhiz.core.presentation.TopBar
 import com.mhmtn.DishWhiz.country.presentation.CountriesScreen
 import com.mhmtn.DishWhiz.country.presentation.CountriesViewModel
@@ -45,8 +46,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        MobileAds.initialize(this@MainActivity) {}
         setContent {
             SetSystemBarColor()
+            InterstitialAdScreen(this)
             RecipeTheme {
                 val navController = rememberNavController()
                 Scaffold(
@@ -123,10 +126,6 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-            }
-            val backgroundScope = CoroutineScope(Dispatchers.IO)
-            backgroundScope.launch {
-                MobileAds.initialize(this@MainActivity) {}
             }
         }
     }

@@ -12,7 +12,7 @@ android {
         applicationId = "com.mhmtn.DishWhiz"
         minSdk = 24
         targetSdk = 35
-        versionCode = 8
+        versionCode = 2
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -76,4 +76,5 @@ dependencies {
     implementation(libs.compose.material3.adaptive.layout)
     implementation(libs.compose.material3.adaptive.navigation)
     implementation(libs.play.services.ads)
+    implementation(libs.play.update)
 }
