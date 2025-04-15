@@ -49,7 +49,7 @@ class CountriesViewModel(
         "Tunisian" to R.drawable.tn,
         "Turkish" to R.drawable.tr,
         "Ukrainian" to R.drawable.ua,
-        "Unknown" to R.drawable.un,
+        "Uruguayan" to R.drawable.uy,
         "Vietnamese" to R.drawable.vn)
 
     private fun getCountries() {

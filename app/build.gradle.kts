@@ -12,8 +12,8 @@ android {
         applicationId = "com.mhmtn.DishWhiz"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 14
+        versionName = "1.4.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,9 +72,5 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.compose.material3.adaptive)
-    implementation(libs.compose.material3.adaptive.layout)
-    implementation(libs.compose.material3.adaptive.navigation)
     implementation(libs.play.services.ads)
-    implementation(libs.play.update)
 }

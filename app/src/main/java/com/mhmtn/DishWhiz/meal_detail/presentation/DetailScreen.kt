@@ -1,5 +1,6 @@
 package com.mhmtn.DishWhiz.meal_detail.presentation
 
+import android.app.Activity
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -41,17 +42,24 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.SubcomposeAsyncImage
 import com.mhmtn.DishWhiz.core.presentation.BannerAdView
+import com.mhmtn.DishWhiz.core.presentation.InterstitialAdHandler
 import com.mhmtn.DishWhiz.meal_detail.domain.MealDetail
 import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
+import kotlin.random.Random
 
 @Composable
 fun DetailScreen(
     state: MealDetailState,
     modifier: Modifier = Modifier,
+    activity: Activity,
     onWatchYoutube: (String) -> Unit
 ) {
+
+    InterstitialAdHandler(activity = activity)
+
 
     val imageMinHeight = 72.dp
     val imageMaxHeight = LocalConfiguration.current.screenHeightDp.dp * 0.35f
@@ -190,19 +198,22 @@ fun DetailScreen(
                         }
                     }
 
-                    Button(
-                        onClick = {onWatchYoutube(state.mealDetail.strYoutube)},
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .height(48.dp),
-                        shape = RoundedCornerShape(24.dp)
-                    ) {
-                        Text(
-                            text = "Watch on YouTube",
-                            color = Color.White
-                        )
+                    if (state.mealDetail.strYoutube != ""){
+                        Button(
+                            onClick = {
+                                onWatchYoutube(state.mealDetail.strYoutube.toString())},
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                                .height(48.dp),
+                            shape = RoundedCornerShape(24.dp)
+                        ) {
+                            Text(
+                                text = "Watch on YouTube",
+                                color = Color.White
+                            )
+                        }
                     }
                     BannerAdView("ca-app-pub-3239252626734491/1877920389")
                 }
@@ -286,7 +297,8 @@ fun EkranPreview() {
                 )
             ),
             modifier = Modifier,
-            onWatchYoutube = {}
+            onWatchYoutube = {},
+            activity = Activity()
         )
     }
 }

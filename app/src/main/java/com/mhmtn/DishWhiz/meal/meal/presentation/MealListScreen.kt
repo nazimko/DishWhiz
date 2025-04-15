@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,7 +43,6 @@ import com.mhmtn.DishWhiz.core.domain.navigation.Destination
 import com.mhmtn.DishWhiz.meal.country_meals.presentation.CountryMealsState
 import com.mhmtn.DishWhiz.meal.ingredient_meals.presentation.IngredientMealsState
 import com.mhmtn.DishWhiz.meal.meal.domain.Meal
-import com.mhmtn.DishWhiz.ui.theme.Acik
 import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
 
 @Composable
@@ -61,7 +61,44 @@ fun MealListScreen(
         ) {
             CircularProgressIndicator()
         }
-    } else {
+    }
+
+    else if (state?.meals?.isEmpty() ?: state2?.meals?.isEmpty() ?: state3!!.meals.isEmpty()) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(32.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.SearchOff,
+                    contentDescription = "No meals icon",
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier
+                        .size(64.dp)
+                        .padding(bottom = 16.dp)
+                )
+                Text(
+                    text = "No meals found",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = "Go back to make a new selection..",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
+    }
+    else {
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

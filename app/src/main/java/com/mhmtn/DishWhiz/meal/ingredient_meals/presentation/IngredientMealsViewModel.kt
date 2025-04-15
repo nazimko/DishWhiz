@@ -35,7 +35,7 @@ class IngredientMealsViewModel(
                 is Resource.Success -> {
                     _state.update {
                         it.copy(
-                            meals = result.data!!.meals,
+                            meals = result.data?.meals ?: emptyList(),
                             isLoading = false
                         )
                     }

@@ -107,7 +107,7 @@ fun CountriesScreenPreview() {
                 countries = (1..15).map {
                     CountryWithFlag(
                         name = "Area $it",
-                        flagResId = R.drawable.un
+                        flagResId = R.drawable.tr
                     )
                 }
             ),

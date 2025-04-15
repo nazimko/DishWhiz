@@ -7,4 +7,6 @@ object Constants {
     const val MEAL_ID = "MealId"
     const val COUNTRY_NAME = "CountryName"
     const val MEAL_NAME = "MealName"
+    const val VISIT_COUNT_KEY = "visit_count_key"
+    const val AD_UNIT_ID = "ca-app-pub-3239252626734491/2490946284"
 }

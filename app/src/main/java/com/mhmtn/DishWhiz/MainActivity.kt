@@ -1,17 +1,15 @@
 package com.mhmtn.DishWhiz
 
 import SetSystemBarColor
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,9 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.ads.MobileAds
 import com.mhmtn.DishWhiz.category.presentation.CategoryViewModel
 import com.mhmtn.DishWhiz.category.presentation.RecipeHomeScreen
+import com.mhmtn.DishWhiz.core.domain.ad.ScreenVisitManager
 import com.mhmtn.DishWhiz.core.domain.navigation.Destination
 import com.mhmtn.DishWhiz.core.presentation.BottomBar
-import com.mhmtn.DishWhiz.core.presentation.InterstitialAdScreen
 import com.mhmtn.DishWhiz.core.presentation.TopBar
 import com.mhmtn.DishWhiz.country.presentation.CountriesScreen
 import com.mhmtn.DishWhiz.country.presentation.CountriesViewModel
@@ -35,21 +33,19 @@ import com.mhmtn.DishWhiz.meal.meal.presentation.MealListScreen
 import com.mhmtn.DishWhiz.meal.meal.presentation.MealViewModel
 import com.mhmtn.DishWhiz.meal_detail.presentation.DetailScreen
 import com.mhmtn.DishWhiz.meal_detail.presentation.MealDetailViewModel
-import com.mhmtn.DishWhiz.ui.theme.Acik
 import com.mhmtn.DishWhiz.ui.theme.RecipeTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
+    private lateinit var screenVisitManager: ScreenVisitManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        MobileAds.initialize(this@MainActivity) {}
+        MobileAds.initialize(this)
         setContent {
+            screenVisitManager = ScreenVisitManager(this)
             SetSystemBarColor()
-            InterstitialAdScreen(this)
             RecipeTheme {
                 val navController = rememberNavController()
                 Scaffold(
@@ -80,11 +76,13 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Destination.MealDetailScreen.route) {
+                            val activity = LocalContext.current as ComponentActivity
                             val uriHandler = LocalUriHandler.current
                             val viewModel = koinViewModel<MealDetailViewModel>()
                             val state by viewModel.state.collectAsStateWithLifecycle()
                             DetailScreen(
                                 state = state,
+                                activity = activity,
                                 onWatchYoutube = {
                                     viewModel.onYoutubeClick(uriHandler, it)
                                 }
@@ -128,5 +126,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        screenVisitManager.resetVisitCount()
     }
 }
